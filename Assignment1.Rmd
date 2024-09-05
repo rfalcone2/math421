@@ -1,0 +1,49 @@
+---
+title: "Assignment 1 - A Sample Rmarkdown"
+author: "Rebecca Falcone"
+date: "2024-09-04"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+  pdf_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1. Introduction
+
+This is my intro for my analysis.
+
+## 1.1 This is a subheading
+
+This is my intro for analysis.
+
+### 1.1.1 What is Rstudio?
+
+*R is a collaborative project with many contributors.*
+
+**Type 'contributors()' for more information and**
+
+
+```{r}
+version
+```
+
+
+```{r cars}
+summary(cars)
+```
+
+# Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
