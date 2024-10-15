@@ -1,6 +1,9 @@
 ---
 title: "Example of index.html"
-format: html
+format:
+  html: 
+    toc: true
+
 editor: visual
 ---
 
