@@ -71,7 +71,7 @@ sum(is.na(df$SEX))
 5. Let's study variable `AGE`. Use the `table` function to check out the values of these variable and forms of missing values. Use `na_if` to change all the forms of missing values to `NAs`. 
 
 ```{r}
-table(df$AGE)
+#table(df$AGE)
 df$AGE = na_if(df$AGE, "Unknown")
 ```
 
@@ -79,7 +79,7 @@ df$AGE = na_if(df$AGE, "Unknown")
 
 ```{r}
 df$AGE = str_replace(df$AGE, "Less than 1", '0')
-df$AGE
+# df$AGE
 ```
 
 
@@ -97,7 +97,7 @@ class(df$AGE)
 mean_AGE <- mean(df$AGE, na.rm=TRUE)
 df$AGE <- replace_na(df$AGE,mean_AGE)
 
-df$AGE
+#df$AGE
 ```
 
 
@@ -115,14 +115,14 @@ table(df$TRAV_SP)
 
 ```{r}
 df$TRAV_SP = str_remove(df$TRAV_SP, "Greater")
-df$TRAV_SP
+# df$TRAV_SP
 ```
 
 - Use the `str_replace` function to replace `Stopped` by '0' (dont forget the quotation mark around 0)
 
 ```{r}
 df$TRAV_SP = str_replace(df$TRAV_SP, "Stopped", '0')
-df$TRAV_SP
+# df$TRAV_SP
 
 ```
 
@@ -130,7 +130,7 @@ df$TRAV_SP
 
 ```{r}
 df$TRAV_SP = na_if(df$TRAV_SP, "Unknown")
-df$TRAV_SP
+# df$TRAV_SP
 ```
 
 - Check the type of this variable using `class`. Use `as.numeric` to change the type to numeric.
@@ -146,7 +146,7 @@ class(df$TRAV_SP)
 ```{r}
 median_TRAV_SP <- median(df$TRAV_SP, na.rm=TRUE)
 df$TRAV_SP <- replace_na(df$TRAV_SP, median_TRAV_SP)
-df$TRAV_SP
+# df$TRAV_SP
 ```
 
 10. Find the correlation between Age of the drivers and Travel speed (`TRAV_SP`). Hint:  You want to look at the seat positions (`SEAT_POS` variable) to filter out the observations about the drivers, then calculate the correlation. 
