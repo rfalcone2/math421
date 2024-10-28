@@ -1,0 +1,165 @@
+
+---
+output: 
+  html_document:
+  pdf_document: default
+  word_document: default
+title: "Assignment 6: Visualization - Aesthetic Mapping"
+---
+
+***How to do it?***: 
+
+- Open the Rmarkdown file of this assignment ([link](assignment6.Rmd)) in Rstudio. 
+
+- Right under each **question**, insert  a code chunk (you can use the hotkey `Ctrl + Alt + I` to add a code chunk) and code the solution for the question. 
+
+- `Knit` the rmarkdown file (hotkey: `Ctrl + Alt + K`) to export an html.  
+
+-  Publish the html file to your Githiub Page. 
+
+***Submission***: Submit the link on Github of the assignment to Canvas.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+```
+
+-------
+
+### Questions on Your Selected Data
+
+Choose a dataset and produce the following types of plots and comment on each plot. Plots should be meaningful. If you use the data we used in class, make sure the plots are not the same as the ones in the slides. 
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(lubridate)
+df <- read_csv("https://bryantstats.github.io/math421/data/adult_census.csv")
+df
+```
+
+
+-------
+
+1. For one continuous variable:
+
+- Density
+```{r}
+df %>% ggplot() +
+    geom_density(mapping = aes(x = age))
+```
+```{r}
+#The data shows that within the dataset, there is a peak within the ages of about 25-40. Essentially most of the people within the dataset are within the age range of 25-40.
+```
+
+- Histogram 
+```{r}
+df %>%  filter(age <60) %>%  ggplot()+
+  geom_histogram(mapping = aes(x = age))
+```
+```{r}
+#This bar chart shows the amount of people within each age range. The ages within the data are spread out, but there are peaks within various ages like 25, 30, & 33.
+```
+
+- Boxplot
+```{r}
+df %>% filter(age < 60) %>%  ggplot()+
+  geom_boxplot(mapping = aes(y = age))
+```
+```{r}
+#The median age within the data is around 36.
+```
+
+-------
+
+2. For one categorical variable
+
+- Barplot
+```{r}
+df %>% ggplot()+
+  geom_bar(mapping = aes(x = race))
+```
+```{r}
+#The majority race within the data set is white.
+```
+
+-------
+
+3. For two continuous variables
+
+- Scatter Plot
+```{r}
+df %>% filter(age < 40) %>% ggplot()+
+  geom_point(mapping = aes(x = age, y = hours.per.week))
+```
+```{r}
+#The data shows that the hours per week for each age differs a lot. There are a lot of data points within 25-50 hours per week for each age.
+```
+
+- Line Plot
+```{r}
+df %>% filter(age < 600, capital.gain> 1000, capital.gain<7000) %>% 
+  ggplot()+
+  geom_line(mapping = aes(x = age, y = capital.gain))
+```
+```{r}
+#The data shows that the capital gain depending on each age varies extremely. 
+```
+
+- Smooth Plot
+```{r}
+df %>% ggplot()+
+  geom_smooth(mapping = aes(x = age, y = hours.per.week))
+```
+```{r}
+#The data shows that the ages 25-55 work the most hours.
+```
+
+-------
+
+4. For one continuous + one categorical variables
+
+- Density
+```{r}
+df %>% filter(age < 550) %>% ggplot()+
+  geom_density(mapping = aes(x = age, colour = sex))
+```
+```{r}
+#The data shows that there are more younger women within the data as the age peaks at 24, and for males it is a little bit older and peaks at about 35.
+```
+
+- BoxPlot
+```{r}
+df %>% filter(occupation == "Sales") %>%  ggplot()+
+  geom_boxplot(mapping = aes(x = age, y = occupation))
+```
+```{r}
+#The median age within the occupation of sales is 35.
+```
+
+-------
+
+5. For two categorical variables: barplot
+```{r}
+df %>% ggplot()+
+  geom_bar(mapping = aes(x = sex, fill = education, position='dodge'))
+
+
+```
+```{r}
+#The colors depict each amount of education between the males and females. The data shows that within the most of the data, some-college was found as the greatest amount within each category.
+```
+
+
+-------
+
+6. A plot that contains three variables
+
+```{r}
+df %>% filter(occupation == "Tech-support") %>% 
+  ggplot()+
+  geom_boxplot(mapping = aes(x = occupation, y = age, colour = sex))
+```
+```{r}
+#The boxplot for females shows that the median age within the occupation of Tech-support is 32, and for males the median age within the occupation of Tech-support is 37.
+```
+
