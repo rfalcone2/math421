@@ -14,3 +14,4 @@ Assignment 5 Part 2: [Assignment 5-2](assignment5_part2.html)
 
 Assignment 6: [Assignment 6](assignment6.html)
 
+[Link to the plot](abc.png)
