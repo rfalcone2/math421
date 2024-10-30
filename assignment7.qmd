@@ -35,28 +35,45 @@ df <- read_csv("https://bryantstats.github.io/math421/data/adult_census_missing.
 
 1.  Make a plot using `facet_wrap` by one categorical variable (`facet_wrap(~variable1)`)
 ```{r}
-df %>% filter(age<55,age>30,capital.gain<50000,capital.gain>5000) %>%   ggplot()+
+df %>% filter(age>30, age<55, capital.gain<50000, capital.gain>5000) %>%   ggplot()+
   geom_point(mapping = aes(x=age, y=capital.gain))+
-  facet_wrap(~race)
+  facet_wrap(~race)+
+  labs(x='Age Range',
+       y='Capital Gain',
+       title = 'Age and Capital Gain Distribution by Race',
+       caption = 'The white race scatterplot of individuals between 30-55 have the most capital gains between 5000-50000.')
+
 ```
 
 2.  Make a plot using `facet_wrap` by two categorical variables (`facet_wrap(~variable1+variable2)`)
 ```{r}
 df %>% filter(age<60,age>40,hours.per.week>30,hours.per.week<40) %>%   ggplot()+
   geom_point(mapping = aes(x=age, y=hours.per.week))+
-  facet_wrap(~race+sex)
+  facet_wrap(~race+sex)+
+  labs(x='Age Range',
+       y='Hours Worked per Week',
+       title = 'Hours Worked per Week vs. Age by Race and Sex',
+       caption = 'The data shows that white females between 40-60 work the most hours per week.')
 ```
 
 3.  Make a plot using `position ='dodge'`.
 ```{r}
 df %>% ggplot()+
-  geom_bar(mapping = aes(x=sex,fill=workclass), position = 'dodge')
+  geom_bar(mapping = aes(x=sex,fill=workclass), position = 'dodge')+
+  labs(x='Sex',
+       y='Number of Individuals by Work Class',
+       title = 'Distribution of Work Class by Sex',
+       caption = 'The data shows that most male individuals are in the private work class.')
 ```
 
 4.  Make a plot using `position ='fill'`.
 ```{r}
 df %>% ggplot()+
-  geom_bar(mapping = aes(x=sex, fill=workclass), position = 'fill')
+  geom_bar(mapping = aes(x=sex, fill=workclass), position = 'fill')+
+  labs(x='Sex',
+       y='Proportion of Work Class',
+       title ='Work Class Composition by Sex',
+       caption = 'The data shows that the predominant work class across genders is the private work class.')
 ```
 
 5.  Make a plot using `geom_col`.
@@ -64,14 +81,22 @@ df %>% ggplot()+
 df %>% group_by(race) %>% 
   summarise(average_age=mean(age, na.rm=TRUE)) %>% 
   ggplot()+
-  geom_col(mapping = aes(x=race, y=average_age))
+  geom_col(mapping = aes(x=race, y=average_age))+
+  labs(x='Race',
+       y='Average Age of Individuals',
+       title = 'Average Age by Race',
+       caption = 'The data shows that the other race in the data has the lowest average age of about 34.')
 ```
 
 6.  Change the theme of one of your plots.
 ```{r}
 df %>% ggplot()+
   geom_bar(mapping = aes(x=sex, fill=workclass), position = 'fill')+
-  theme_dark()
+  theme_dark()+
+  labs(x='Sex',
+       y='Proportion of Work Class',
+       title ='Work Class Composition by Sex',
+       caption = 'The data shows that the predominant work class across genders is the private work class.')
 ```
 
 7.  Make a plot using combo filter + ggplot
@@ -79,7 +104,11 @@ df %>% ggplot()+
 df %>% 
   filter(age<60,age>25) %>% 
   ggplot()+
-  geom_bar(mapping = aes(x=sex, fill=occupation))
+  geom_bar(mapping = aes(x=sex, fill=occupation))+
+  labs(x='Sex',
+       y='Count of Individuals',
+       title = 'Occupational Distribution by Sex for Ages 25-60',
+       caption = 'The data shows that within the male sex, the occupation held the most is Exec-managerial.')
 ```
 
 8.  Make a plot using combo group_by + summarise + geom_col
@@ -88,7 +117,11 @@ df %>%
   group_by(race, sex) %>% 
   summarise(mean_age = mean(age)) %>% 
   ggplot()+
-  geom_col(aes(x=race, y=mean_age, fill=sex), position = 'dodge')
+  geom_col(aes(x=race, y=mean_age, fill=sex), position = 'dodge')+
+  labs(x='Race',
+       y='Average Age',
+       title = 'Mean Age of Individuals by Race and Sex',
+       caption = 'The data shows that average age of individuals that are male and American-Indian-Eskimo is about 37.')
 ```
 
 9.  Save a plot and put a link of the plot to your Github Webpage. To link a plot `abc.png` you just need to insert the following on the README.md
@@ -108,7 +141,7 @@ ggsave(filename = 'abc.png', plot = gg)
 
 -   [Data](https://bryantstats.github.io/math421/data/vaccinations-by-manufacturer.csv)
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 df <- read_csv('https://bryantstats.github.io/math421/data/vaccinations-by-manufacturer.csv')
 ```
@@ -127,8 +160,26 @@ df %>%
 Do the follows.
 
 -   Use `geom_point` to compare the vaccines used by date in Argentina in 2022.
+```{r}
+df %>% filter(location=='Argentina',date<='2022-12-31',date>='2022-1-1') %>% 
+  ggplot()+
+  geom_point(mapping = aes(x=date,y=vaccine, color=vaccine))+
+  labs(x='Date by Month',
+       y='Type of Vaccine',
+       title = 'Vaccination Trends in Argentina (2022)',
+       caption = 'The data shows that the Oxford/AstraZeneca vaccine was the least administered out of all the types of vaccines.')
+```
 
 -   Change `geom_point` to `geom_line` in the above codes to have the corresponding line plots.
+```{r}
+df %>% filter(location=='Argentina',date<='2022-12-31',date>='2022-1-1') %>% 
+  ggplot()+
+  geom_line(mapping = aes(x=date,y=vaccine, color=vaccine))+
+  labs(x='Date by Month',
+       y='Type of Vaccine',
+       title = 'Vaccination Trends in Argentina (2022)',
+       caption = 'The data shows that the Oxford/AstraZeneca vaccine was the least administered out of all the types of vaccines.')
+```
 
 11. (Using the same dataset as in 10.) Sometime we need to do some calculations on the data before plotting. For example, the below codes is to compare the total vaccines (including all types of vaccines) by date between the US and the EU
 
@@ -163,5 +214,31 @@ df %>%
 Do the follows.
 
 -   Use `geom_point` compare the total vaccines (including all types of vaccines) by date between countries/regions in Asia
+```{r}
+df %>% 
+  filter(location %in% c('Cyprus', 'Hong Kong', 'Japan', 'Nepal', 'South Korea')) %>% 
+  group_by(date, location) %>% 
+  summarise(totalvac_Asia=sum(total_vaccinations, na.rm = TRUE)) %>% 
+  ggplot()+
+  geom_point(mapping = aes(x=date, y=totalvac_Asia, color=location))+
+  labs(x='Date',
+       y='Total Vaccines',
+       title = 'Vaccine Trends in Countries/Regions in Asia',
+       caption = 'The data shows that Japan has the most vaccines.')
+```
 
 -   Use `geom_point` compare the total vaccines (including all types of vaccines) by date between countries/regions in South America in 2021
+```{r}
+df %>% 
+  filter(location %in% c('Argentina', 'Chile', 'Ecuador', 'Peru', 'Uruguay')) %>% 
+  filter(date<='2021-12-31',date>='2021-1-1') %>% 
+  group_by(date, location) %>% 
+  summarise(totalvac_SAmerica=sum(total_vaccinations, na.rm = TRUE)) %>% 
+  ggplot()+
+  geom_point(mapping = aes(x=date, y=totalvac_SAmerica, color=location))+
+  labs(x='Date',
+       y='Total Vaccines',
+       title = 'Vaccine Trends in South America Countries/Regions in 2021',
+       caption = 'The data shows that Argentina has the most vaccines in 2021.')
+```
+

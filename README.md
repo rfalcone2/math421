@@ -14,4 +14,5 @@ Assignment 5 Part 2: [Assignment 5-2](assignment5_part2.html)
 
 Assignment 6: [Assignment 6](assignment6.html)
 
-[Link to the plot](abc.png)
+Assignment 7: [Assignment 7](assignment7.html)
+  Quesion 9 in Assignment 7: [Link to the plot](abc.png)
