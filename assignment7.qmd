@@ -155,6 +155,7 @@ df %>%
   geom_point(mapping = aes(x = date, 
                                     y = total_vaccinations, 
                                     color = vaccine))
+#This was the example, so I didn't put a title or caption.
 ```
 
 Do the follows.
@@ -196,6 +197,8 @@ d1 %>%
   geom_point(mapping=aes(x=date, 
                          y=total_vac2, 
                          color=location))
+
+#This was the example, so I didn't put a title or caption.
 ```
 
 Notice that the above codes could be piped in one
@@ -209,6 +212,7 @@ df %>%
   geom_point(mapping=aes(x=date, 
                          y=total_vac2, 
                          color=location))
+#This was the example, so I didn't put a title or caption.
 ```
 
 Do the follows.
