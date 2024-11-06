@@ -17,3 +17,5 @@ Assignment 6: [Assignment 6](assignment6.html)
 Assignment 7: [Assignment 7](assignment7.html)
  
   Question 9 in Assignment 7: [Link to the plot](abc.png)
+  
+Assignemnt 8: [Assignment 8](assignment8.html)
