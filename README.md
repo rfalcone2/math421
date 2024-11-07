@@ -18,4 +18,6 @@ Assignment 7: [Assignment 7](assignment7.html)
  
   Question 9 in Assignment 7: [Link to the plot](abc.png)
   
-Assignemnt 8: [Assignment 8](assignment8.html)
+Assignment 8: [Assignment 8](assignment8.html)
+
+Assignment 9: [Assignment 9](assignment9.html)
