@@ -285,7 +285,8 @@ df1 <- df %>%
 g1 = df1 %>% ggplot()+
   geom_smooth(mapping = aes(x=age, y=los, color=sex))+
   labs(x='Age',
-       y='Length of Stay Composition by Age',
+       y='Length of Stay',
+       title='Length of Stay Composition by Age',
        caption = 'The data shows that for both sexes, the length of stay peaks at around age 13. Males being 11 days and females being 8.')
 
 ggsave(filename = 'plot1.png', plot = g1)
@@ -390,7 +391,7 @@ g8 = df1 %>%
   geom_density(mapping = aes(x=age, colour = sex))+
   labs(x='Age',
        y='Density',
-       title ='',
+       title ='Distribution of Age',
        caption = 'The data shows that within the dataset, there is a vast majority of males that are 65, and for females it peaks at 30 and again around 74.')
 
 ggsave(filename = 'plot8.png', plot = g8)
@@ -586,6 +587,7 @@ cm <- confusionMatrix(data = pred, reference = df_test$target)
 
 cm$overall[1]
 ```
+
 
 
 6. Create another `target` variable (binary), decide the input variables and redo 1 to 5. 
