@@ -29,4 +29,4 @@ Assignment 11: [Assignment 11](assignment11.html)
 Assignment 12: [Assignment 12](assignment12.html)
 
 Midterm Notebook: [midterm notebook](midterm_toc.html)
-Midterm Presentation: [midterm presentation](Midterm Presentation.html)
+Midterm Presentation: [midterm presentation](MidtermPresentation.html)
