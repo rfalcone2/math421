@@ -12,7 +12,7 @@ editor: visual
 
 ## Plot 2
 
-![](plott2.png)
+![](plot2.png)
 
 
 
