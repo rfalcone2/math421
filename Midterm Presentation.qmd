@@ -1,0 +1,120 @@
+---
+title: "Midterm"
+author: "Rebecca Falcone"
+format: revealjs
+editor: visual
+---
+
+## Plot 1
+
+![](plot1.png)
+---
+##Plot 2
+
+![](plot2.png)
+
+---
+## Plot 3
+
+![](plot3.png)
+
+---
+## Plot 4
+
+![](plot4.png)
+---
+
+## Plot 5
+
+![](plot5.png)
+
+---
+## Plot 6
+
+![](plot6.png)
+---
+
+## Plot 7
+
+![](plot7.png)
+
+---
+## Plot 8
+
+![](plot8.png)
+---
+
+## Plot 9
+
+![](plot9.png)
+---
+##Plot 10
+
+![](plot10.png)
+
+---
+## Animation Plot
+
+![](animation.gif)
+
+---
+## Part 2 Results
+
+-LOS peaks at age 13, with males averaging 11 days and females 8 days, and longer stays result in higher charges.
+
+-Teenagers show high variability in total charges, with the highest charge (~$2,400,000) for a 14-year-old male.
+
+-Rhode Island Hospital is the most popular provider for ages 45–50 and has the highest total charges compared to other providers.
+
+-Median age for both sexes is 57, with distinct age peaks for males at 65 and females at 30 and 74.
+
+-Male admissions peak in October, female admissions in January, and LOS trends vary by season (summer for males, fall for females).
+
+
+---
+
+## Part 3 - Question 4
+![](Question4.png)
+-Forest Ranger performs better than FDA in both Accuracy and Kappa.
+-Forest Ranger's scores are consistently close to 1, showing high reliability.
+-FDA has more variability and lower overall scores in both metrics.
+-Forest Ranger is the more accurate and stable model.
+
+---
+## Part 3 - Question 5
+
+![](Question5.png)
+
+---
+## Part 3 - Question 6
+
+![](Question6-3.png)
+---
+## Part 3 - Question 6
+
+![](Question6-3a.png)
+---
+## Part 3 - Question 6
+
+![](Question6-3b.png)
+---
+## Part 3 - Question 6
+
+![](Question6-4.png)
+-Forest Ranger performs better than FDA in both Accuracy and Kappa.
+-Forest Ranger's scores are consistently close to 1, showing high reliability.
+-FDA has more variability and lower overall scores in both metrics.
+-Forest Ranger is equal to 1, could be due to overfitting or a perfect model
+---
+## Part 3 - Question 6
+
+![](Question6-5.png)
+
+---
+## Conclusion
+
+Challenges
+-The data set was very large and made it challenging to go through
+-Challenging to create more plots
+-Faced a few errors
+---
