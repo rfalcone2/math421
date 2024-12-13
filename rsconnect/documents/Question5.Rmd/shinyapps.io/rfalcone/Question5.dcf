@@ -1,0 +1,12 @@
+name: Question5
+title: Question5
+username: rfalcone
+account: rfalcone
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13589002
+bundleId: 9513273
+url: https://rfalcone.shinyapps.io/Question5/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

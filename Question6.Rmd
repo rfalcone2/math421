@@ -1,0 +1,76 @@
+
+---
+title: "NBA - SliderInput"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    logo: logo.png
+    source_code: embed
+    social: menu
+
+runtime: shiny
+---
+
+```{r global, include=FALSE}
+# load data in 'global' chunk so it can be shared by all users of the dashboard
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+library(knitr)
+library(DT)
+df <- read_csv('nba_data_processed.csv')
+df <- drop_na(df, Age) 
+df$Tm = factor(df$Tm)
+df$Pos = factor(df$Pos)
+df <- df %>% filter(Tm =='SAS' | Tm =='HOU' | Tm =='MIL')
+
+nba_pos <- unique(df$Pos)
+```
+
+{.sidebar}
+=======================================================================
+
+The NBA player statistics data set provides detailed performance metrics for various NBA players from the 2022-2023 season. This data is filtered into the teams in the Midwest. Select the input for the plot.
+
+```{r}
+sliderInput(inputId = "G_input",
+            label = h2("Select G Range"),
+            min = min(df$G, na.rm=TRUE),
+            max = max(df$G, na.rm=TRUE),
+            value= c(25, 50))
+
+```
+
+Main Tab 1
+=======================================================================
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Density Plot
+
+```{r}
+renderPlotly({
+  p1 <- df %>% 
+    filter(G>input$G_input[1], G<input$G_input[2]) %>% 
+    ggplot(aes(x=Age, color=Tm))+
+    geom_density()
+  ggplotly(p1)
+})
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Bar Plot
+
+```{r}
+renderPlotly({
+  p2 <- df %>% 
+    filter(G>input$G_input[1], G<input$G_input[2]) %>% 
+    ggplot(aes(x=Pos, fill=Tm))+
+    geom_bar()
+  ggplotly(p2)
+})
+```

@@ -1,0 +1,82 @@
+
+---
+title: "NBA - Check Box"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    logo: logo.png
+    source_code: embed
+    social: menu
+
+runtime: shiny
+---
+
+```{r global, include=FALSE}
+# load data in 'global' chunk so it can be shared by all users of the dashboard
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+library(knitr)
+library(DT)
+library(lubridate)
+
+df <- read_csv('nba_data_processed.csv')
+df <- df %>% filter(Tm =='BOS' | Tm =='NYK' | Tm =='BRK' | Tm =='PHI' | Tm =='TOR')
+
+df$date <- mdy(df$date)
+
+df$Pos = factor(df$Pos)
+df$Tm = factor(df$Tm)
+
+nba_pos <- unique(df$Pos)
+```
+
+{.sidebar}
+=======================================================================
+
+The NBA player statistics data set provides detailed performance metrics for various NBA players from the 2022-2023 season. Some key statistics include points, assists, rebounds, and shooting percentages. It also includes information on individual player performance and teams across the country. This data can be used to analyze player performance trends, compare players across teams, and gain insights into team dynamics.
+
+- In this example, the data for Date is not fictional and not real data. 
+
+```{r}
+dateRangeInput(inputId = "date_input",
+               label = h2("Date range"), 
+               start = min(df$date), 
+               end = max(df$date),
+               min = min(df$date), 
+               max = max(df$date)) 
+```
+
+Main Tab 1
+=======================================================================
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Density Plot
+
+```{r}
+renderPlotly({
+  p1 <- df %>% 
+    filter(date > input$date_input[1], date < input$date_input[2]) %>% 
+    ggplot(aes(x=Age, color=Tm))+
+    geom_density()
+  ggplotly(p1)
+})
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Bar Plot
+
+```{r}
+renderPlotly({
+  p2 <- df %>% 
+    filter(date > input$date_input[1], date < input$date_input[2]) %>% 
+    ggplot(aes(x=Pos, fill=Tm))+
+    geom_bar()
+  ggplotly(p2)
+})
+```

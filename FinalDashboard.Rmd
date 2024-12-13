@@ -1,0 +1,259 @@
+---
+title: "Final Project"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+library(knitr)
+library(DT)
+df <- read_csv('nba_data_processed.csv')
+
+# Create a ggplot object
+df1 <- df %>% 
+  mutate(Age=as.factor(Age))
+p1 <- df1 %>% 
+  ggplot()+ 
+  geom_point(mapping=aes(x=Pos, y=PTS))+
+  labs(x='Position',y='Points', title = 'Position vs Points')
+
+p2 <- df %>% 
+  ggplot()+ 
+  geom_point(mapping=aes(x=Age, y=PTS))+
+  labs(x='Age',
+       y='Points',
+       title = 'Age vs Points')
+
+p3 <- df1 %>% 
+  filter(Tm =='BOS' | Tm =='NYK' | Tm =='BRK' | Tm =='PHI' | Tm =='TOR', Player == 'Jaylen Brown' | Player =='Marcus Smart' | Player == 'Jayson Tatum' | Player == 'Derrick White' | Player == 'Al Horford' | Player == 'Jalen Brunson' | Player == 'Quentin Grimes' | Player == 'RJ Barrett' | Player == 'Julius Randle' | Player == 'Mitchell Robinson' | Player == 'Tyrese Maxey' | Player == 'James Harden' | Player == 'P.J. Tucker' | Player =='Tobias Harris' | Player =='Joel Embiid' | Player == 'Fred VanVleet' | Player == 'Scottie Barnes' | Player =='OG Anunoby' | Player =='Pascal Siakam' | Player == 'Jakob Poeltl' | Player =='Spencer Dinwiddie' | Player == 'Mikal Bridges' | Player == 'Dorian Finney-Smith' | Player == 'Cameron Johnson' | Player == 'Nic Claxton') %>% 
+  ggplot()+
+  geom_col(mapping = aes(x=PTS, y=Tm, fill = Player), position = 'dodge')+
+  labs(x='Points', y='Team', fill='Player', title = 'Points vs Team by Player')
+ggsave(filename = 'final1.png', plot = p3)
+
+p4 <- df %>% 
+  filter(Tm == 'MIA'| Tm == 'DEN') %>% 
+  ggplot()+
+  geom_smooth(mapping = aes(x=Age, y=PTS, color=Tm))+
+  labs(x='Age', y='Points', color='Team', title = 'Age vs Points by Team')
+
+```
+
+{.sidebar}
+=======================================================================
+
+### 1. NBA Player Statistics 
+
+The NBA player statistics data set provides detailed performance metrics for various NBA players from the 2022-2023 season. Some key statistics include points, assists, rebounds, and shooting percentages. It also includes information on individual player performance and teams across the country. This data can be used to analyze player performance trends, compare players across teams, and gain insights into team dynamics.
+
+### 2. Flexdashboard and Plotly
+
+This interactive uses `flexdashboard` and `plotly` to visualize the data set. There are various plots that show the correlation between different variables within the data set. 
+
+Data Set
+=======================================================================
+
+Column {data-width=500, .tabset}
+-----------------------------------------------------------------------
+
+### Column Tab 1
+
+```{r}
+df
+```
+
+
+### Column Tab 2
+
+```{r}
+kable(df)
+```
+
+
+### Column Tab 3
+
+```{r}
+datatable(df, options = list(
+  pageLength = 25
+))
+```
+
+
+Main Tab 1
+=======================================================================
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+#### 1. Position vs Points
+
+Plot 1 is showed to the right. Within Plot 1 the data shows how each position varies with the amount of points that they earn. The majority of the points are found within the Point Guard and Shooting Guard Positions. The Point Guard has the greatest amount of points, where as the forward positions hold less points. The data also makes sense as the Point Guards and Shooting Guards have more points compared to the Centers since the Guards are more likely to make and shoot 3 points, whereas the Centers go for 2 points.
+
+#### 2. Analyzing Further
+
+In the example below, I framed in on the difference between the Guards and Center. After trying various different point amounts, it seems that there is an outlier within the Center points that is making it standout. However, if that is taken out, then you can see the skew in how the guards gain more points per game.
+
+#### 3. Example
+
+```{r, echo=TRUE, eval=TRUE}
+library(plotly)
+df_pos <- df %>% filter(Pos =='C'| Pos == 'PG' | Pos == 'SG') 
+g1 <-  ggplot(data=df_pos, aes(x=Pos, y=PTS)) + geom_point()
+ggplotly(g1)
+```
+
+
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Plot 1
+
+```{r}
+p1
+```
+
+### Plot 1
+
+```{r}
+ggplotly(p1)
+```
+
+
+Main Tab 2
+=======================================================================
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+#### 1. Age vs Points
+
+Plot 2 is shown to the right. Within plot 2 the data shows that the age range of 23-28 has the greatest amount of points. The data coincides with how the NBA works as a lot of players go into the NBA younger, but do not get a lot of playing time until they consistently work harder for the position to play. This means that a few years after they enter the NBA they are in their peak of playing and gaining points. After the 28 age mark, the data also shows how as they get older the less points they earn. 
+
+
+#### 2. Analyzing Further
+
+In the example below, it hones in on how after the age of 28 that the points start to decrease as age increases.
+
+
+#### 3. Example
+
+```{r, echo=TRUE, eval=TRUE}
+
+library(plotly)
+df_age <- df %>% filter(Age>27) 
+g2 <- ggplot(data=df_age, aes(x=Age, y=PTS)) + geom_point()
+ggplotly(g2)
+```
+
+
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Plot 2
+
+```{r}
+p2
+```
+
+### Plot 2
+
+```{r}
+ggplotly(p2)
+```
+
+Main Tab 3
+=======================================================================
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+#### 1. Points vs Team by Player
+
+Plot 3 is shown to the right. Within the data, I selected the teams in the NBA within the Northeast and filtered it to the starting players from the 22-23 season. Through that it focused on how many players earned based off of these filters for each teams and shows the leading scorer for each team in the Northeast from the 22-23 season. The data shows that the player with the most points from the Northeast is Joel Embiid from the 76ers. Not far behind, is the Celtics who have the most players with the most points.
+
+
+#### 2. Analyzing Further
+
+Analyzing further into the two teams who had the top scoring players, the 76ers and the Celtics. After looking at these two teams specifically, the data shows how both teams have many high scoring players, while the 76ers have the top scoring player, which is Joel Embiid. This is shown in the example below.
+
+
+#### 3. Example
+
+```{r, echo=TRUE, eval=TRUE}
+
+library(plotly)
+
+df_tm <- df %>% filter(Tm == 'PHI' | Tm == 'BOS')
+g3 <- ggplot(data=df_tm, aes(x=Tm, y=PTS)) + geom_point()
+ggplotly(g3)
+
+```
+
+
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Row 1
+
+```{r}
+p3
+```
+
+### Row 2
+
+```{r}
+ggplotly(p3)
+```
+
+Main Tab 4
+=======================================================================
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+#### 1. Age vs Points by Team
+
+Plot 4 is shown to the right. Within the data, I took the two top finalist in the 22-23 championship game, the Nuggets and the Heat. Within these two teams, the plot shows the correlation between the age versus the points scored. The two teams almost contradict each other as the Nuggets age that has the greatest amount of points is 28, where as the heat is 34. As the Nuggets age peaks at 28, the Heat's age troughs to the lowest amount of points is earned at that age.
+
+
+#### 2. Analyzing Further
+
+Analyzing further by looking at the data as a scatter plot, it clearly shows how the Nuggets age peaks at 28 for having the greatest amount of points, and the Heat peaks at 34 for having the greatest amount of points. This is shown in the example below.
+
+
+#### 3. Example
+
+```{r, echo=TRUE, eval=TRUE}
+library(plotly)
+df_tm4 <- df %>% filter(Tm == 'MIA' | Tm == 'DEN')
+g4 <- ggplot(data=df_tm4, aes(x=Age, y=PTS, color=Tm)) + geom_point()
+ggplotly(g4)
+```
+
+
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Plot 4
+
+```{r}
+p4
+```
+
+### Plot 4
+
+```{r}
+ggplotly(p4)
+```
+
+
+

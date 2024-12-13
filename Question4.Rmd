@@ -1,0 +1,75 @@
+
+---
+title: "NBA - SelectInput"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    logo: logo.png
+    source_code: embed
+    social: menu
+
+runtime: shiny
+---
+
+```{r global, include=FALSE}
+# load data in 'global' chunk so it can be shared by all users of the dashboard
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+library(knitr)
+library(DT)
+df <- read_csv('nba_data_processed.csv')
+df <- drop_na(df, Age) 
+df <- drop_na(df, Tm)
+df <- df %>% filter(Tm =='BOS' | Tm =='NYK' | Tm =='BRK' | Tm =='PHI' | Tm =='TOR')
+df$Team = factor(df$Tm)
+
+nba_pos <- unique(df$Pos)
+```
+
+{.sidebar}
+=======================================================================
+
+The NBA player statistics data set provides detailed performance metrics for various NBA players from the 2022-2023 season. This data is filtered into the teams in the Northeast. Select the position to see how the age differs through each position.
+
+
+```{r}
+selectInput(inputId = "pos_input", 
+            label = h3("Select Position"),
+            choices = nba_pos, 
+            selected = 'PG')
+```
+
+Main Tab 1
+=======================================================================
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Density Plot
+
+```{r}
+renderPlotly({
+  p1 <- df %>% 
+    filter(Pos==input$pos_input) %>% 
+    ggplot(aes(x=Age, color=Tm))+
+    geom_density()
+  ggplotly(p1)
+})
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Bar Plot
+
+```{r}
+renderPlotly({
+  p2 <- df %>% 
+    filter(Pos==input$pos_input, Player == 'Jaylen Brown' | Player =='Marcus Smart' | Player == 'Jayson Tatum' | Player == 'RJ Barrett' | Player == 'Julius Randle' | Player == 'Mitchell Robinson' | Player == 'Tyrese Maxey' | Player == 'James Harden' | Player == 'P.J. Tucker' | Player =='Tobias Harris' | Player =='Joel Embiid' | Player =='Pascal Siakam' | Player == 'Jakob Poeltl' | Player =='Spencer Dinwiddie' | Player == 'Mikal Bridges' | Player == 'Dorian Finney-Smith') %>% 
+    ggplot(aes(x=Player, fill=Tm))+
+    geom_bar()
+  ggplotly(p2)
+})
+```

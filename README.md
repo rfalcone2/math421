@@ -30,3 +30,5 @@ Assignment 12: [Assignment 12](assignment12.html)
 
 Midterm Notebook: [Midterm Notebook](midterm_toc.html)
 Midterm Presentation: [Midterm Presentation](MidtermPresentation.html)
+
+Final:[Final](final.html)
