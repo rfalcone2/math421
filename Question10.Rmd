@@ -177,7 +177,7 @@ Main Tab 3
 Column {data-width=500}
 -----------------------------------------------------------------------
 
-### Bar Plot
+### Scatter Plot
 
 ```{r}
 renderPlotly({
@@ -185,8 +185,8 @@ renderPlotly({
     filter(PTS>input$PTS_input[1], PTS<input$PTS_input[2]) %>% 
     filter(Tm==input$Tm_input) %>% 
     filter(Pos %in% input$Pos_input) %>%  
-    ggplot(aes(x=Pos, fill=Player))+
-    geom_bar()
+    ggplot(aes(x=Pos, y=PTS, color=Player))+
+    geom_point()
   ggplotly(p2)
 })
 ```
