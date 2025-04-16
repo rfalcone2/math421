@@ -1,0 +1,172 @@
+---
+title: "Assignment-11"
+author: "Rebecca Falcone"
+date: "2025-04-16"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Reproduce the results of the codes from the slides.
+
+```{r}
+library(tidyverse)
+library(factoextra)
+library(dplyr)
+library(GGally)
+library(inspectdf)
+library(ggiraphExtra)
+library(factoextra)
+library(tidyr)
+
+df_original = read_csv("SpotifyFeatures.csv")
+```
+```{r}
+# Select only numeric variables
+df = df_original %>%
+  select(where(is.numeric))
+# scale the data
+df <- data.frame((scale(df)))
+# plot the correlation matrix
+ggcorr(df, label=T, label_size = 2.9, hjust = 1)
+```
+
+```{r}
+# Define the range of clusters you want to consider
+num_clusters <- 2:7
+# Calculate WSS for each number of clusters
+wss <- numeric(length(num_clusters))
+for (i in seq_along(num_clusters)) {
+  k <- num_clusters[i]
+  kmeans_model <- kmeans(df, centers = k, nstart = 10)
+  wss[i] <- kmeans_model$tot.withinss
+}
+# Plot the WSS values against the number of clusters
+plot(num_clusters, wss, type = "b", pch = 19, frame = FALSE,
+     xlab = "Number of Clusters", ylab = "Within-Cluster Sum of Squares")
+# Add a vertical line at the "elbow point"
+elbow_point <- which(diff(wss) <= 0.01 * max(diff(wss)))
+abline(v = num_clusters[elbow_point], col = "red")
+```
+
+```{r}
+# Apply k-means
+k <- kmeans(df, centers = 3)
+df1 = df
+df1$cluster = factor(k$cluster)
+```
+
+```{r}
+# plot the radar
+library(ggiraphExtra)
+ggRadar(
+  data=df1,
+  mapping = aes(colours = cluster),
+  interactive = T
+)
+```
+
+```{r}
+df_original$cluster = factor(k$cluster)
+df_original %>% 
+  filter(cluster == 1) %>% 
+  select(track_name) %>% 
+  head(10)%>% 
+  knitr::kable()
+```
+
+```{r}
+df_original$cluster = factor(k$cluster)
+df_original %>% 
+  filter(cluster == 2) %>% 
+  select(track_name) %>% 
+  head(10)%>% 
+  knitr::kable()
+```
+
+```{r}
+df_original$cluster = factor(k$cluster)
+df_original %>% 
+  filter(cluster == 3) %>% 
+  select(track_name) %>% 
+  head(10) %>% 
+  knitr::kable()
+```
+
+```{r}
+df2 = df %>% select(loudness, acousticness, energy)
+# Apply k-means
+k <- kmeans(df2, centers = 3)
+df1 = df2
+df1$cluster = factor(k$cluster)
+```
+
+```{r}
+# plot the radar
+library(ggiraphExtra)
+ggRadar(
+  data=df1,
+  mapping = aes(colours = cluster),
+  interactive = T
+)
+```
+
+
+
+## 2. Apply k-means clustering based on the few variables and label the clusters.
+
+```{r}
+df3 = df %>% select(popularity, liveness, tempo)
+# Apply k-means
+k <- kmeans(df3, centers = 3)
+df1 = df3
+df1$cluster = factor(k$cluster)
+```
+
+```{r}
+library(ggiraphExtra)
+ggRadar(
+  data=df1,
+  mapping = aes(colours = cluster),
+  interactive = T
+)
+```
+
+```{r}
+df_original$cluster = factor(k$cluster)
+df_original %>% 
+  filter(cluster == 1) %>% 
+  select(track_name) %>% 
+  head(10)%>% 
+  knitr::kable()
+```
+
+```{r}
+df_original$cluster = factor(k$cluster)
+df_original %>% 
+  filter(cluster == 2) %>% 
+  select(track_name) %>% 
+  head(10)%>% 
+  knitr::kable()
+```
+
+```{r}
+df_original$cluster = factor(k$cluster)
+df_original %>% 
+  filter(cluster == 3) %>% 
+  select(track_name) %>% 
+  head(10) %>% 
+  knitr::kable()
+```
+
+
+## 3. Give a few recommendations for songs in each cluster.
+
+```{r}
+#Reccomendations for songs in each cluster could be to rank by popularity, filter by age/the year it came out, and or to filter or rank by artist/band.
+```
+
